@@ -59,8 +59,6 @@ function addMeal(mealData, random = false) {
 			btn.classList.add('active')
 		}
 
-		// clean the container
-		favoriteContainer.innerHTML = ''
 		fetchFavMeals()
 	})
 
@@ -87,6 +85,9 @@ function getMealsLS() {
 }
 
 async function fetchFavMeals() {
+	// clean the container
+	favoriteContainer.innerHTML = ''
+
 	const mealIds = getMealsLS()
 
 	for (let i = 0; i < mealIds.length; i++) {
@@ -104,7 +105,14 @@ function addMealFav(mealData) {
 		<img 
 			src="${mealData.strMealThumb}"
 			alt="${mealData.strMeal}"
-		/><span>${mealData.strMeal}</span>`
+		/><span>${mealData.strMeal}</span>
+		<button class="clear"><i class="fas fa-window-close"></i></button>`
+
+	const btn = favMeal.querySelector('.clear')
+	btn.addEventListener('click', () => {
+		removeMealLS(mealData.idMeal)
+		fetchFavMeals()
+	})
 
 	favoriteContainer.appendChild(favMeal)
 }
